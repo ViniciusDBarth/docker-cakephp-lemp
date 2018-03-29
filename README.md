@@ -1,4 +1,4 @@
-# Nginx PHP MySQL to CakePHP 3x 
+# Docker LEMP to CakePHP  
 
 Docker to CakePHP 3x running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
@@ -16,19 +16,15 @@ Docker to CakePHP 3x running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     We'll generate and configure SSL certificate for nginx before running server.
 
-4. [Configure Xdebug](#configure-xdebug) [Optional]
-
-    We'll configure Xdebug for IDE (PHPStorm or Netbeans).
-
-5. [Run the application](#run-the-application)
+4. [Run the application](#run-the-application)
 
     By this point we’ll have all the project pieces in place.
 
-6. [Use Makefile](#use-makefile) [Optional]
+5. [Use Makefile](#use-makefile) [Optional]
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
-7. [Use Docker Commands](#use-docker-commands)
+6. [Use Docker Commands](#use-docker-commands)
 
     When running, you can use docker commands for doing recurrent operations.
 
@@ -158,27 +154,6 @@ If you modify the host name, do not forget to add it to the `/etc/hosts` file.
 
 ---
 
-## Configure Xdebug
-
-If you use another IDE than [PHPStorm](https://www.jetbrains.com/phpstorm/) or [Netbeans](https://netbeans.org/), go to the [remote debugging](https://xdebug.org/docs/remote) section of Xdebug documentation.
-
-For a better integration of Docker to PHPStorm, use the [documentation](https://github.com/nanoninja/docker-nginx-php-mysql/blob/master/doc/phpstorm-macosx.md).
-
-1. Get your own local IP address :
-
-    ```sh
-    sudo ifconfig
-    ```
-
-2. Edit php file `etc/php/php.ini` and comment or uncomment the configuration as needed.
-
-3. Set the `remote_host` parameter with your IP :
-
-    ```sh
-    xdebug.remote_host=192.168.0.1 # your IP
-    ```
----
-
 ## Run the application
 
 1. Start the application :
@@ -199,7 +174,7 @@ For a better integration of Docker to PHPStorm, use the [documentation](https://
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](#configure-nginx-with-ssl-certificates) not configured by default)
     * [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
 
-4. Stop and clear services
+3. Stop and clear services
 
     ```sh
     sudo docker-compose down -v
@@ -211,18 +186,17 @@ For a better integration of Docker to PHPStorm, use the [documentation](https://
 
 When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-| Name          | Description                                |
-|---------------|--------------------------------------------|
-| clean         | Clean directories for reset                |
-| code-sniff    | Check the API with PHP Code Sniffer (PSR2) |
-| composer-up   | Update PHP dependencies with composer      |
-| docker-start  | Create and start containers                |
-| docker-stop   | Stop and clear all services                |
-| gen-certs     | Generate SSL certificates for `nginx`      |
-| logs          | Follow log output                          |
-| mysql-dump    | Create backup of whole database            |
-| mysql-restore | Restore backup from whole database         |
-| test          | Test application with phpunit              |
+| Name               | Description                                |
+|--------------------|--------------------------------------------|
+| clean              | Clean directories for reset                |
+| composer-up        | Update PHP dependencies with composer      |
+| docker-start       | Create and start containers                |
+| docker-stop        | Stop and clear all services                |
+| gen-certs          | Generate SSL certificates for `nginx`      |
+| logs               | Follow log output                          |
+| mysql-dump         | Create backup of whole database            |
+| mysql-restore      | Restore backup from whole database         |
+| cakephp-install    | Install CakePHP in the public folder       |
 
 ### Examples
 
@@ -245,31 +219,13 @@ make help
 ### Installing package with composer
 
 ```sh
-sudo docker run --rm -v $(pwd)/web/app:/app composer require symfony/yaml
+sudo docker run --rm -v $(pwd)/web/public:/app composer require symfony/yaml
 ```
 
 ### Updating PHP dependencies with composer
 
 ```sh
-sudo docker run --rm -v $(pwd)/web/app:/app composer update
-```
-
-### Generating PHP API documentation
-
-```sh
-sudo docker-compose exec -T php ./app/vendor/bin/apigen generate app/src --destination ./app/doc
-```
-
-### Testing PHP application with PHPUnit
-
-```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
-```
-
-### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
-
-```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src
+sudo docker run --rm -v $(pwd)/web/public:/app composer update
 ```
 
 ### Checking installed PHP extensions
@@ -328,9 +284,3 @@ source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u
 ```
 
 ---
-
-## Help us !
-
-Any thought, feedback or (hopefully not!)
-
-Developed by [@letvinz](https://twitter.com/letvinz)
