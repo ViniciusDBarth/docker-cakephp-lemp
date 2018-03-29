@@ -1,6 +1,6 @@
-# Nginx PHP MySQL [![Build Status](https://travis-ci.org/nanoninja/docker-nginx-php-mysql.svg?branch=master)](https://travis-ci.org/nanoninja/docker-nginx-php-mysql) [![GitHub version](https://badge.fury.io/gh/nanoninja%2Fdocker-nginx-php-mysql.svg)](https://badge.fury.io/gh/nanoninja%2Fdocker-nginx-php-mysql)
+# Nginx PHP MySQL to CakePHP 3x 
 
-Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
+Docker to CakePHP 3x running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
 ## Overview
 
@@ -12,11 +12,11 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     We’ll download the code from its repository on GitHub.
 
-3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates) [`Optional`]
+3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates) [Optional]
 
     We'll generate and configure SSL certificate for nginx before running server.
 
-4. [Configure Xdebug](#configure-xdebug) [`Optional`]
+4. [Configure Xdebug](#configure-xdebug) [Optional]
 
     We'll configure Xdebug for IDE (PHPStorm or Netbeans).
 
@@ -24,7 +24,7 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     By this point we’ll have all the project pieces in place.
 
-6. [Use Makefile](#use-makefile) [`Optional`]
+6. [Use Makefile](#use-makefile) [Optional]
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
@@ -52,7 +52,7 @@ which docker-compose
 
 Check Docker Compose compatibility :
 
-* [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
+ - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
 
 The following is optional but makes life more enjoyable :
 
@@ -86,20 +86,20 @@ This project use the following ports :
 | Nginx      | 8000 |
 | Nginx SSL  | 3000 |
 
-___
+---
 
 ## Clone the project
 
-To install [Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git), download it and install following the instructions :
+To install [Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git), download it and install following the instructions : 
 
 ```sh
-git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
+git clone https://github.com/andersoncorso/docker-cakephp-lemp.git
 ```
 
-Go to the project directory :
+Go to the project directory : 
 
 ```sh
-cd docker-nginx-php-mysql
+cd docker-cakephp-lemp
 ```
 
 ### Project tree
@@ -112,29 +112,21 @@ cd docker-nginx-php-mysql
 │   └── db
 │       ├── dumps
 │       └── mysql
-├── doc
 ├── docker-compose.yml
 ├── etc
 │   ├── nginx
 │   │   ├── default.conf
 │   │   └── default.template.conf
 │   ├── php
+│   │   ├── Dockerfile
 │   │   └── php.ini
 │   └── ssl
 └── web
-    ├── app
-    │   ├── composer.json.dist
-    │   ├── phpunit.xml.dist
-    │   ├── src
-    │   │   └── Foo.php
-    │   └── test
-    │       ├── FooTest.php
-    │       └── bootstrap.php
     └── public
         └── index.php
 ```
 
-___
+---
 
 ## Configure Nginx With SSL Certificates
 
@@ -164,7 +156,7 @@ If you modify the host name, do not forget to add it to the `/etc/hosts` file.
     # }
     ```
 
-___
+---
 
 ## Configure Xdebug
 
@@ -185,17 +177,11 @@ For a better integration of Docker to PHPStorm, use the [documentation](https://
     ```sh
     xdebug.remote_host=192.168.0.1 # your IP
     ```
-___
+---
 
 ## Run the application
 
-1. Copying the composer configuration file : 
-
-    ```sh
-    cp web/app/composer.json.dist web/app/composer.json
-    ```
-
-2. Start the application :
+1. Start the application :
 
     ```sh
     sudo docker-compose up -d
@@ -207,7 +193,7 @@ ___
     sudo docker-compose logs -f # Follow log output
     ```
 
-3. Open your favorite browser :
+2. Open your favorite browser :
 
     * [http://localhost:8000](http://localhost:8000/)
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](#configure-nginx-with-ssl-certificates) not configured by default)
@@ -219,30 +205,28 @@ ___
     sudo docker-compose down -v
     ```
 
-___
+---
 
 ## Use Makefile
 
 When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-| Name          | Description                                  |
-|---------------|----------------------------------------------|
-| apidoc        | Generate documentation of API                |
-| clean         | Clean directories for reset                  |
-| code-sniff    | Check the API with PHP Code Sniffer (`PSR2`) |
-| composer-up   | Update PHP dependencies with composer        |
-| docker-start  | Create and start containers                  |
-| docker-stop   | Stop and clear all services                  |
-| gen-certs     | Generate SSL certificates for `nginx`        |
-| logs          | Follow log output                            |
-| mysql-dump    | Create backup of all databases               |
-| mysql-restore | Restore backup of all databases              |
-| phpmd         | Analyse the API with PHP Mess Detector       |
-| test          | Test application with phpunit                |
+| Name          | Description                                |
+|---------------|--------------------------------------------|
+| clean         | Clean directories for reset                |
+| code-sniff    | Check the API with PHP Code Sniffer (PSR2) |
+| composer-up   | Update PHP dependencies with composer      |
+| docker-start  | Create and start containers                |
+| docker-stop   | Stop and clear all services                |
+| gen-certs     | Generate SSL certificates for `nginx`      |
+| logs          | Follow log output                          |
+| mysql-dump    | Create backup of whole database            |
+| mysql-restore | Restore backup from whole database         |
+| test          | Test application with phpunit              |
 
 ### Examples
 
-Start the application :
+Start the application : 
 
 ```sh
 sudo make docker-start
@@ -254,7 +238,7 @@ Show help :
 make help
 ```
 
-___
+---
 
 ## Use Docker commands
 
@@ -273,31 +257,19 @@ sudo docker run --rm -v $(pwd)/web/app:/app composer update
 ### Generating PHP API documentation
 
 ```sh
-sudo docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 ./app/vendor/bin/apigen generate app/src --destination ./app/doc
+sudo docker-compose exec -T php ./app/vendor/bin/apigen generate app/src --destination ./app/doc
 ```
 
 ### Testing PHP application with PHPUnit
 
 ```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app
-```
-
-### Fixing standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
-
-```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpcbf -v --standard=PSR2 ./app/src
+sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
 ```
 
 ### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
 
 ```sh
 sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src
-```
-
-### Analyzing source code with [PHP Mess Detector](https://phpmd.org/)
-
-```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpmd ./app/src text cleancode,codesize,controversial,design,naming,unusedcode
 ```
 
 ### Checking installed PHP extensions
@@ -320,7 +292,7 @@ and
 mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD"
 ```
 
-#### Creating a backup of all databases
+#### Backup of database
 
 ```sh
 mkdir -p data/db/dumps
@@ -330,7 +302,13 @@ mkdir -p data/db/dumps
 source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump --all-databases -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/db.sql"
 ```
 
-#### Restoring a backup of all databases
+or
+
+```sh
+source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump test -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/test.sql"
+```
+
+#### Restore Database
 
 ```sh
 source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" < "data/db/dumps/db.sql"
@@ -349,8 +327,10 @@ source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u
 ?>
 ```
 
-___
+---
 
-## Help us
+## Help us !
 
 Any thought, feedback or (hopefully not!)
+
+Developed by [@letvinz](https://twitter.com/letvinz)
