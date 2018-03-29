@@ -212,6 +212,13 @@ Show help :
 make help
 ```
 
+Install CakePHP :
+
+```sh
+sudo make clean
+make cakephp-install
+```
+
 ---
 
 ## Use Docker commands
