@@ -1,6 +1,6 @@
 # Docker LEMP to CakePHP  
 
-Docker to CakePHP 3x running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
+Docker to CakePHP 3x running Nginx, PHP-FPM, Composer, MySQL, PHPMyAdmin and MailHog.
 
 ## Overview
 
@@ -69,6 +69,7 @@ sudo apt install build-essential
 * [PHP-FPM](https://hub.docker.com/r/nanoninja/php-fpm/)
 * [Composer](https://hub.docker.com/_/composer/)
 * [PHPMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
+* [MailHog](https://hub.docker.com/r/mailhog/mailhog/)
 * [Generate Certificate](https://hub.docker.com/r/jacoelho/generate-certificate/)
 
 You should be careful when installing third party web servers such as MySQL or Nginx.
@@ -77,10 +78,11 @@ This project use the following ports :
 
 | Server     | Port |
 |------------|------|
-| MySQL      | 8989 |
-| PHPMyAdmin | 8080 |
 | Nginx      | 8000 |
 | Nginx SSL  | 3000 |
+| PHPMyAdmin | 8080 |
+| MySQL      | 8089 |
+| MailHog    | 8011 |
 
 ---
 
@@ -173,6 +175,7 @@ If you modify the host name, do not forget to add it to the `/etc/hosts` file.
     * [http://localhost:8000](http://localhost:8000/)
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](#configure-nginx-with-ssl-certificates) not configured by default)
     * [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
+    * [http://localhost:8011](http://localhost:8011/) MailHog 
 
 3. Stop and clear services
 
