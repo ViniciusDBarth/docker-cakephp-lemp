@@ -104,13 +104,16 @@ cd docker-cakephp-lemp
 
 ```sh
 .
+├── .env
+├── .gitignore
+├── .travis.yml
+├── docker-compose.yml
 ├── Makefile
 ├── README.md
 ├── data
 │   └── db
 │       ├── dumps
 │       └── mysql
-├── docker-compose.yml
 ├── etc
 │   ├── nginx
 │   │   ├── default.conf
@@ -157,6 +160,8 @@ If you modify the host name, do not forget to add it to the `/etc/hosts` file.
 ---
 
 ## Run the application
+
+PS: If you changed docker-compose.yml container_names, also change the .env file and replace "MYSQL_HOST=dcl_mysql" with container_name
 
 1. Start the application :
 

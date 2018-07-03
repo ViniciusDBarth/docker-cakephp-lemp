@@ -17,5 +17,9 @@ nbproject/
 /nbproject/private/
 /nbproject/private/private.properties
 
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
 # SSL Certs
 etc/ssl/
