@@ -1,25 +1,41 @@
-# Global
-.*.swp
-.DS_Store
-
 # Application
 web/
 data
+etc/ssl/
 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Tool specific files #
+#######################
+# vim
+*~
+*.swp
+*.swo
+# sublime text & textmate
+*.sublime-*
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+# Eclipse
+.settings/*
+# JetBrains, aka PHPStorm, IntelliJ IDEA
+.idea/*
+# NetBeans
+nbproject/*
+# Visual Studio Code
+.vscode
+# Sass preprocessor
+.sass-cache/
 # PHPStorm
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
-
-# Netbeans
-nbproject/
-/nbproject/
-/nbproject/private/
-/nbproject/private/private.properties
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# SSL Certs
-etc/ssl/
